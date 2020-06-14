@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<title>Dashboard Template for Bootstrap</title>
+		<!-- Bootstrap core CSS -->
+		<link href="asserts/css/bootstrap.min.css" rel="stylesheet">
+
+		<!-- Custom styles for this template -->
+		<link href="asserts/css/dashboard.css" rel="stylesheet">
+		<style type="text/css">
+			/* Chart.js */
+			
+			@-webkit-keyframes chartjs-render-animation {
+				from {
+					opacity: 0.99
+				}
+				to {
+					opacity: 1
+				}
+			}
+			
+			@keyframes chartjs-render-animation {
+				from {
+					opacity: 0.99
+				}
+				to {
+					opacity: 1
+				}
+			}
+			
+			.chartjs-render-monitor {
+				-webkit-animation: chartjs-render-animation 0.001s;
+				animation: chartjs-render-animation 0.001s;
+			}
+		</style>
+	</head>
+
+	<body>
+
+<!--	通过选择器 ： #引入topbar-->
+	<div th:replace="commons/bar::#topbar"/>
+
+<!--		 引入抽取的topbar-->
+<!--      模板名:: 抽取的组件名-->
+<!--<div th:insert="~{dashboard::topbar}"></div>-->
+
+		<div class="container-fluid">
+			<div class="row">
+
+				<div th:replace="~{commons/bar::leftbar(activeUri='emps')}"/>
+
+				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+					<h2><a class="btn-sm btn-success" href="emp" th:href="@{/emp}">添加员工</a></h2>
+					<div class="table-responsive">
+						<table class="table table-striped table-sm">
+							<thead>
+								<tr>
+									<th>#id</th>
+									<th>lastName</th>
+									<th>email</th>
+									<th>gender</th>
+									<th>department</th>
+									<th>birth</th>
+									<th>options</th>
+								</tr>
+							</thead>
+
+							<tbody>
+							<tr th:each="emp:${emps}">
+								<td th:text="${emp.id}"/>
+								<td th:text="${emp.lastName}"/>
+								<td>[[${emp.email}]]</td>
+								<td th:text="${emp.gender}==0?'女':'男'"/>
+								<td th:text="${emp.department.departmentName}"/>
+								<td th:text="${#dates.format(emp.birth,'yyyy-MM-dd HH:mm')}"/>
+								<td>
+									<a class="btn btn-sm btn-primary" th:href="@{/emp/}+${emp.id}">编辑</a>
+									<button th:attr="del_uri=@{/emp/}+${emp.id}" type="submit" class="btn btn-sm btn-danger deleteBtn" >删除</button>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</main>
+				<form id="deleteForm" method="post">
+					<input type="hidden" name="_method" value="delete">
+				</form>
+			</div>
+		</div>
+
+		<!-- Bootstrap core JavaScript
+    ================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script type="text/javascript" src="asserts/js/jquery-3.2.1.slim.min.js" th:src="@{/webjars/jquery/3.5.1/dist/jquery.js}"></script>
+		<script type="text/javascript" src="asserts/js/popper.min.js" th:src="@{/webjars/popper.js/1.16.0/popper.js}"></script>
+		<script type="text/javascript" src="asserts/js/bootstrap.min.js" th:src="@{/webjars/bootstrap/4.5.0/js/bootstrap.js}"></script>
+
+		<!-- Icons -->
+		<script type="text/javascript" src="asserts/js/feather.min.js"></script>
+
+
+<!--    删除按钮-->
+	<script>
+         $(".deleteBtn").click(function () {
+         	$("#deleteForm").attr("action",$(this).attr("del_uri")).submit();
+			 alert($(this).attr("del_uri"));
+			 return false;
+		 });
+	</script>
+	</body>
+
+</html>
+</html>
