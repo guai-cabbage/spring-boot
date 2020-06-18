@@ -14,8 +14,8 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Arrays;
 @Configuration
 public class MyServerConfig {
-    //将定制器加入到容器中
-    @Bean
+    //将定制容器加入到容器中
+    //@Bean
     public WebServerFactoryCustomizer
     webServerFactoryCustomizer() {
         return new WebServerFactoryCustomizer<ConfigurableWebServerFactory>() {
@@ -37,7 +37,6 @@ public class MyServerConfig {
         registrationBean.setUrlPatterns(Arrays.asList("/hello","/myServlet"));
         return registrationBean;
     }
-
     //注册servlet
     @Bean
     public ServletRegistrationBean myServlet(){
