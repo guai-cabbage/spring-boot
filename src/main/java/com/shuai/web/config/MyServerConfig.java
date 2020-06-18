@@ -15,6 +15,7 @@ import java.util.Arrays;
 @Configuration
 public class MyServerConfig {
     //将定制容器加入到容器中
+    //注释掉自定义的定制器，以使用jetty
     //@Bean
     public WebServerFactoryCustomizer
     webServerFactoryCustomizer() {
